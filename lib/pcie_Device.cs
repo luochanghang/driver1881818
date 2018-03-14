@@ -375,7 +375,7 @@ Error:
         }
 
 
-        public DWORD EnableInterrupts(USER_INTERRUPT_CALLBACK userIntCb, IntPtr pData)
+        public DWORD EnableInterrupts(USER_INTERRUPT_CALLBACK userIntCb, IntPtr pData)//中断使能程序 
         {
             DWORD dwStatus;
             WD_TRANSFER[] pIntTransCmds = null;
@@ -383,7 +383,7 @@ Error:
             if(userIntCb == null)
             {
                 Log.TraceLog("PCIE_Device.EnableInterrupts: "
-                    + "user callback is invalid");
+                    + "user callback is invalid");//无效的
                 return (DWORD)wdc_err.WD_INVALID_PARAMETER;
             }
 

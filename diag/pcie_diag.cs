@@ -137,7 +137,7 @@ namespace Jungo.pcie_diag//定义命名空间
             this.lstBxDevices.Name = "lstBxDevices";
             this.lstBxDevices.Size = new System.Drawing.Size(499, 52);
             this.lstBxDevices.TabIndex = 27;
-            this.lstBxDevices.SelectedIndexChanged += new System.EventHandler(this.lstBxDevices_SelectedIndexChanged);//选择项目更新
+            this.lstBxDevices.SelectedIndexChanged += new System.EventHandler(this.lstBxDevices_SelectedIndexChanged);
             this.lstBxDevices.DoubleClick += new System.EventHandler(this.lstBxDevices_DoubleClicked);
             // 
             // mainMenu1
@@ -168,6 +168,7 @@ namespace Jungo.pcie_diag//定义命名空间
             this.menuInterrupts.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuEnableInt});
             this.menuInterrupts.Text = "Interrupts";
+            this.menuInterrupts.Click += new System.EventHandler(this.menuInterrupts_Click);
             this.menuInterrupts.Select += new System.EventHandler(this.menuInterrupts_Select);
             // 
             // menuEnableInt
@@ -291,9 +292,10 @@ namespace Jungo.pcie_diag//定义命名空间
             this.Name = "PCIE_diag";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PCIE .NET Sample";
-            this.Closed += new System.EventHandler(this.PCIE_diag_Closing);//窗口关闭之后出触发方法
-            this.Load += new System.EventHandler(this.PCIE_diag_Load);//窗口打开之后触发方法
+            this.Closed += new System.EventHandler(this.PCIE_diag_Closing);
+            this.Load += new System.EventHandler(this.PCIE_diag_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 #endregion
@@ -520,7 +522,7 @@ Error:
                 "Enable Interrupts";     
         }
 
-        private void menuEnableInt_Click(object sender,
+        private void menuEnableInt_Click(object sender,//enable 中断
             System.EventArgs e)
         {
             PCIE_Device dev = pciDevList.Get(lstBxDevices.SelectedIndex);
@@ -625,8 +627,13 @@ Error:
                 Invoke(new Log.ERR_LOG(LogFunc), new object[]{str});
             else
                 LogFunc(str);
-        }        
-    }  
+        }
+
+        private void menuInterrupts_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 
     public class diag_lib
     {
