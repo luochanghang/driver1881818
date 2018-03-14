@@ -96,6 +96,7 @@ namespace Jungo.pcie_diag
             this.txtData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtData.Size = new System.Drawing.Size(250, 95);
             this.txtData.TabIndex = 8;
+            this.txtData.TextChanged += new System.EventHandler(this.txtData_TextChanged);
             // 
             // lblOffset
             // 
@@ -137,6 +138,7 @@ namespace Jungo.pcie_diag
             this.txtBytes.Name = "txtBytes";
             this.txtBytes.Size = new System.Drawing.Size(120, 21);
             this.txtBytes.TabIndex = 2;
+            this.txtBytes.TextChanged += new System.EventHandler(this.txtBytes_TextChanged);
             // 
             // lblBytes
             // 
@@ -152,6 +154,7 @@ namespace Jungo.pcie_diag
             this.txtInput.Name = "txtInput";
             this.txtInput.Size = new System.Drawing.Size(153, 21);
             this.txtInput.TabIndex = 3;
+            this.txtInput.TextChanged += new System.EventHandler(this.txtInput_TextChanged);
             // 
             // label1
             // 
@@ -270,43 +273,43 @@ namespace Jungo.pcie_diag
 
         private void TranslateInput()
         {
-            DWORD dwStatus;
-            BOOL bIsRead = m_direction == RW.READ;
+            DWORD dwStatus;//状态 
+            BOOL bIsRead = m_direction == RW.READ;//判断是读还是写
             m_excp = new Exception("Enter the offset. Entered value should " +
                 "be a hex number");
-            m_dwOffset = (DWORD)Convert.ToInt32(txtOffset.Text,16);
+            m_dwOffset = (DWORD)Convert.ToInt32(txtOffset.Text,16);//offset 将16进制字符串转换成32位无符号的字符  地址位
 
             m_excp = new Exception("Enter the number of bytes. " + 
                 "Entered value should be a hex number");
-            m_dwBytes = (DWORD)Convert.ToInt32(txtBytes.Text,16);
+            m_dwBytes = (DWORD)Convert.ToInt32(txtBytes.Text,16);//number of bytes 的数据装换
 
-            m_pData = Marshal.AllocHGlobal((int)m_dwBytes);
-            if(m_pData == IntPtr.Zero)
-                return;                        
+            m_pData = Marshal.AllocHGlobal((int)m_dwBytes);//请求一个内存空间 大小为m_dwBytes字节大小 返回地址的头指针 
+            if (m_pData == IntPtr.Zero)                                          // 这里用这个句子的原因是下面函数需要一个intprt类型的指针 而m_buff是一个类示例！！！！ 创建这个空间只是为了适应格式
+                return;                        //返回 没有写入数据
 
             m_buff = new byte[m_dwBytes];
 
             if(!bIsRead)
             {
-                if(txtInput.Text == "")
+                if(txtInput.Text == "")//如果输入为空的话  抛出异常
                 {
                     m_excp = new Exception("You must enter the data to be " +
                         "written");
                     throw m_excp;
                 }
 
-                string str = diag_lib.PadBuffer(txtInput.Text, 
-                    (DWORD)txtInput.Text.Length,(DWORD)2*m_dwBytes);
-
+                string str = diag_lib.PadBuffer(txtInput.Text, //补零函数
+                    (DWORD)txtInput.Text.Length,(DWORD)2*m_dwBytes);//返回一个字符串 字符串的前端是前端是txtinput的内容 后端补零 补零知道m_dwbytes的长度 应为是16进制表示 
+                //所以对应的16进制字符串字符个数为m_dwBytes*2.
                 m_excp = new Exception("The data you've entered is invalid. "
                     + "please try again (hex)");
                 for(int i=0; i<m_dwBytes; ++i)
-                    m_buff[i] = Convert.ToByte(str.Substring(2*i,2),16);
+                    m_buff[i] = Convert.ToByte(str.Substring(2*i,2),16);//将上一步的字符串转换成32位无符号数 放进缓冲器中
 
-                Marshal.Copy(m_buff, 0 , m_pData, (int)m_dwBytes);
+                Marshal.Copy(m_buff, 0 , m_pData, (int)m_dwBytes);//将m_buff中的数据copy到m_pData中，从m_pData开始 长度为m_dwByte长度
 
                 dwStatus = wdc_lib_decl.WDC_PciWriteCfg(m_device.Handle, 
-                    m_dwOffset, m_pData, m_dwBytes);                                 
+                    m_dwOffset, m_pData, m_dwBytes);                                 //写函数 传入一个设备的句柄  一个配置空间的地址偏移量 一个数据长度 The number of bytes to write 还有一个缓冲地址的指针
             }
             else //READ
             {
@@ -322,22 +325,22 @@ namespace Jungo.pcie_diag
 
         private void btLog_Click(object sender, System.EventArgs e)
         {
-            txtData.Clear();
+            txtData.Clear();//清空输出框
         }
 
-        private void TraceLog(BOOL bIsRead, wdc_err status)
+        private void TraceLog(BOOL bIsRead, wdc_err status)//状态输出
         {
             string sData = "";
             string sInfo = "";
             if(status == wdc_err.WD_STATUS_SUCCESS)
             {
                 sData = (bIsRead? "R: " : "W: ") +
-                    diag_lib.DisplayHexBuffer(m_buff, m_dwBytes);
+                    diag_lib.DisplayHexBuffer(m_buff, m_dwBytes);//数据装换成字符串
                 sInfo = (bIsRead? " from " : " to ") + "offset " +
                     m_dwOffset.ToString("X") + "(" + m_device.ToString(false)
                     + ")";
 
-                Log.TraceLog("CfgTransfersForm: " + sData + sInfo);
+                Log.TraceLog("CfgTransfersForm: " + sData + sInfo);//在主窗口输出
             }
             else
             {
@@ -349,10 +352,25 @@ namespace Jungo.pcie_diag
                 Log.ErrLog("CfgTransfersForm: " + sData + sInfo);
             }
 
-            txtData.Text += sData + Environment.NewLine;            
+            txtData.Text += sData + Environment.NewLine;     //字窗口输出       
         }
 
         private void txtOffset_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtBytes_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtInput_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtData_TextChanged(object sender, EventArgs e)
         {
 
         }

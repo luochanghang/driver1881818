@@ -253,8 +253,8 @@ namespace Jungo.pcie_lib
              以仅注册一些资源或仅注册特定部分 地址空间，例如。
              */
 
-            dwStatus = wdc_lib_decl.WDC_PciDeviceOpen(ref m_wdcDevice,
-                deviceInfo, IntPtr.Zero, IntPtr.Zero, "", IntPtr.Zero);//状态正常之后尝试打开
+            dwStatus = wdc_lib_decl.WDC_PciDeviceOpen(ref m_wdcDevice,//传递指针  这里不许传递指针 不然它只会把数据传递进去 但是对象不能修改
+                deviceInfo, IntPtr.Zero, IntPtr.Zero, "", IntPtr.Zero);//状态正常之后尝试打开  返回一个m_WDCDevice的handle句柄
 
             if ((DWORD)wdc_err.WD_STATUS_SUCCESS != dwStatus)//如果打开失败
             {

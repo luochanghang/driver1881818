@@ -630,7 +630,7 @@ Error:
 
     public class diag_lib
     {
-        public static string PadBuffer(string str, uint fromIndex, uint toIndex)
+        public static string PadBuffer(string str, uint fromIndex, uint toIndex)//从fromIndex 到toIndex 字符串结尾添加0 使字符串到达一定长度
         {
             for(uint i=fromIndex; i < toIndex; ++i)
                 str += "0";
