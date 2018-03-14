@@ -86,17 +86,17 @@ namespace Jungo.pcie_lib//定义设备库
             WDC_PCI_SCAN_RESULT scanResult = new WDC_PCI_SCAN_RESULT();//新建扫描结果类
 
             dwStatus = wdc_lib_decl.WDC_PciScanDevices(PCIE_DEFAULT_VENDOR_ID, 
-                PCIE_DEFAULT_DEVICE_ID, scanResult);
+                PCIE_DEFAULT_DEVICE_ID, scanResult);//将符合V_id 和D_id的设备的扫描结果放入scanresult中
 
             if ((DWORD)wdc_err.WD_STATUS_SUCCESS != dwStatus)
             {
                 Log.ErrLog("PCIE_DeviceList.Populate: Failed scanning "
                     + "the PCI bus. Error 0x" + dwStatus.ToString("X") +
-                    utils.Stat2Str(dwStatus));
+                    utils.Stat2Str(dwStatus));//失败
                 return dwStatus;
             }
 
-            if (scanResult.dwNumDevices == 0)
+            if (scanResult.dwNumDevices == 0)//如果设备个数为0的话 打印符合的设备为0
             {
                 Log.ErrLog("PCIE_DeviceList.Populate: No matching PCI " +
                     "device was found for search criteria " + PCIE_DEFAULT_VENDOR_ID.ToString("X") 
@@ -110,9 +110,9 @@ namespace Jungo.pcie_lib//定义设备库
                 WD_PCI_SLOT slot = scanResult.deviceSlot[i];
 
                 device = new PCIE_Device(scanResult.deviceId[i].dwVendorId,
-                    scanResult.deviceId[i].dwDeviceId, slot);
+                    scanResult.deviceId[i].dwDeviceId, slot);//构造一个设备 试用slot
 
-                this.Add(device);                                
+                this.Add(device);              //将设备添加进数组                  
             }                        
             return (DWORD)wdc_err.WD_STATUS_SUCCESS;
         }

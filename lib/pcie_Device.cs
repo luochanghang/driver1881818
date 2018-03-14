@@ -39,7 +39,7 @@ namespace Jungo.pcie_lib
         /* constructors & destructors */
         internal protected PCIE_Device(WD_PCI_SLOT slot): this(0, 0, slot){}
 
-        internal protected PCIE_Device(DWORD dwVendorId, DWORD dwDeviceId,//构造函数
+        internal protected PCIE_Device(DWORD dwVendorId, DWORD dwDeviceId,//构造函数   slot包含设备的的 bus function slot信息
             WD_PCI_SLOT slot)
         {
             m_wdcDevice = new WDC_DEVICE();
@@ -188,7 +188,7 @@ namespace Jungo.pcie_lib
             m_sDeviceLongDesc = string.Format("PCIE Device: Vendor ID 0x{0:X}, " 
                 + "Device ID 0x{1:X}, Physical Location {2:X}:{3:X}:{4:X}", 
                 id.dwVendorId, id.dwDeviceId, slot.dwBus, slot.dwSlot, 
-                slot.dwFunction);
+                slot.dwFunction);//描述文件 
 
             m_sDeviceShortDesc = string.Format("Device " + 
                 "{0:X},{1:X} {2:X}:{3:X}:{4:X}", id.dwVendorId, 
