@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
@@ -20,22 +20,22 @@ using WDC_DEVICE_HANDLE = System.IntPtr;
 using WDC_ADDR_SIZE = System.UInt32;
 using HANDLE = System.IntPtr;
 
-namespace Jungo.pcie_diag//¶¨ÒåÃüÃû¿Õ¼ä
+namespace Jungo.pcie_diag//å®šä¹‰å‘½åç©ºé—´
 {
-    public enum RW//¶ÁĞ´Êı×Ö¶¨Òå
+    public enum RW//è¯»å†™æ•°å­—å®šä¹‰
     {
         READ = 0,
         WRITE = 1,
         READ_ALL = 2
     }
 
-    public enum TRANSFER_TYPE//´«Êä¶¨Òå
+    public enum TRANSFER_TYPE//ä¼ è¾“å®šä¹‰
     {
         BLOCK = 0,
         NONBLOCK = 1
     }
 
-    public enum ACTION_TYPE //¶¯×÷ÀàĞÍ¶¨Òå
+    public enum ACTION_TYPE //åŠ¨ä½œç±»å‹å®šä¹‰
     {
         CFG = 0,
         RT = 1,        
@@ -44,9 +44,9 @@ namespace Jungo.pcie_diag//¶¨ÒåÃüÃû¿Õ¼ä
     public class PCIE_diag : System.Windows.Forms.Form
     {
         private IContainer components;
-        private PCIE_DeviceList pciDevList;//Éè±¸ÁĞ±íÓĞ¹Ø
+        private PCIE_DeviceList pciDevList;//è®¾å¤‡åˆ—è¡¨æœ‰å…³
         private Log log;
-        //Éè±¸´°¿Ú°´¼ü¶¨Òå
+        //è®¾å¤‡çª—å£æŒ‰é”®å®šä¹‰
         private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.MainMenu mainMenu1;
         private System.Windows.Forms.MenuItem menuAddrSpaces;
@@ -72,13 +72,13 @@ namespace Jungo.pcie_diag//¶¨ÒåÃüÃû¿Õ¼ä
 
         private System.Windows.Forms.Button btDevice;
         
-        public PCIE_diag()    //Ä¬ÈÏ¹¹Ôì·½·¨
+        public PCIE_diag()    //é»˜è®¤æ„é€ æ–¹æ³•
         {
-            InitializeComponent();  //pcie_diag ´°¿Ú³õÊ¼»¯·½·¨
-            //ÊµÀı»¯Î¯ÍĞ  delegate ac = new delegate(TraceLog) ÄÇÃ´ ac¾Í´ú±íTraceLogº¯Êı 
+            InitializeComponent();  //pcie_diag çª—å£åˆå§‹åŒ–æ–¹æ³•
+            //å®ä¾‹åŒ–å§”æ‰˜  delegate ac = new delegate(TraceLog) é‚£ä¹ˆ acå°±ä»£è¡¨TraceLogå‡½æ•° 
             log = new Log(new Log.TRACE_LOG(TraceLog),
-                new Log.ERR_LOG(ErrLog));  //½«logµÄÊµÏÖ·½·¨´«ÈëLogÀàÖĞ
-            pciDevList = PCIE_DeviceList.TheDeviceList();     //»ñÈ¡Éè±¸ÁĞ±í¶ÔÏó ÊµÀı»¯
+                new Log.ERR_LOG(ErrLog));  //å°†logçš„å®ç°æ–¹æ³•ä¼ å…¥Logç±»ä¸­
+            pciDevList = PCIE_DeviceList.TheDeviceList();     //è·å–è®¾å¤‡åˆ—è¡¨å¯¹è±¡ å®ä¾‹åŒ–
         }
 
         protected override void Dispose( bool disposing )
@@ -137,7 +137,7 @@ namespace Jungo.pcie_diag//¶¨ÒåÃüÃû¿Õ¼ä
             this.lstBxDevices.Name = "lstBxDevices";
             this.lstBxDevices.Size = new System.Drawing.Size(499, 52);
             this.lstBxDevices.TabIndex = 27;
-            this.lstBxDevices.SelectedIndexChanged += new System.EventHandler(this.lstBxDevices_SelectedIndexChanged);//Ñ¡ÔñÏîÄ¿¸üĞÂ
+            this.lstBxDevices.SelectedIndexChanged += new System.EventHandler(this.lstBxDevices_SelectedIndexChanged);//é€‰æ‹©é¡¹ç›®æ›´æ–°
             this.lstBxDevices.DoubleClick += new System.EventHandler(this.lstBxDevices_DoubleClicked);
             // 
             // mainMenu1
@@ -291,8 +291,8 @@ namespace Jungo.pcie_diag//¶¨ÒåÃüÃû¿Õ¼ä
             this.Name = "PCIE_diag";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PCIE .NET Sample";
-            this.Closed += new System.EventHandler(this.PCIE_diag_Closing);//´°¿Ú¹Ø±ÕÖ®ºó³ö´¥·¢·½·¨
-            this.Load += new System.EventHandler(this.PCIE_diag_Load);//´°¿Ú´ò¿ªÖ®ºó´¥·¢·½·¨
+            this.Closed += new System.EventHandler(this.PCIE_diag_Closing);//çª—å£å…³é—­ä¹‹åå‡ºè§¦å‘æ–¹æ³•
+            this.Load += new System.EventHandler(this.PCIE_diag_Load);//çª—å£æ‰“å¼€ä¹‹åè§¦å‘æ–¹æ³•
             this.ResumeLayout(false);
 
         }
@@ -300,20 +300,20 @@ namespace Jungo.pcie_diag//¶¨ÒåÃüÃû¿Õ¼ä
 
         /// The main entry point for the application.
         [STAThread]
-            static void Main() //³ÌĞòÈë¿Ú
+            static void Main() //ç¨‹åºå…¥å£
             {
                 Application.Run(new PCIE_diag());
             }
 
 
         /* Open a handle to a device */
-        private bool DeviceOpen(int iSelectedIndex)  //ÅĞ¶ÏÉè±¸ÊÇ·ñ¿ªÆô³É¹¦
+        private bool DeviceOpen(int iSelectedIndex)  //åˆ¤æ–­è®¾å¤‡æ˜¯å¦å¼€å¯æˆåŠŸ
         {
             DWORD dwStatus;
-            PCIE_Device device = pciDevList.Get(iSelectedIndex);//»ñµÃµ±Ç°Éè±¸
+            PCIE_Device device = pciDevList.Get(iSelectedIndex);//è·å¾—å½“å‰è®¾å¤‡
 
             /* Open a handle to the device */
-            dwStatus = device.Open();//¿ªÆôÉè±¸ »ñÈ¡Éè±¸×´Ì¬ĞÅÏ¢ 
+            dwStatus = device.Open();//å¼€å¯è®¾å¤‡ è·å–è®¾å¤‡çŠ¶æ€ä¿¡æ¯ 
             if (dwStatus != (DWORD)wdc_err.WD_STATUS_SUCCESS)
             {
                 Log.ErrLog("PCIE_diag.DeviceOpen: Failed opening a " +
@@ -341,15 +341,15 @@ namespace Jungo.pcie_diag//¶¨ÒåÃüÃû¿Õ¼ä
             return bStatus;
         }
 
-        private void PCIE_diag_Load(object sender, System.EventArgs e)//µ±PCIE_diag´°¿Ú´ò¿ªÖ®ºó½øĞĞLoad
+        private void PCIE_diag_Load(object sender, System.EventArgs e)//å½“PCIE_diagçª—å£æ‰“å¼€ä¹‹åè¿›è¡ŒLoad
         {
-            DWORD dwStatus = pciDevList.Init();           //½«Éè±¸ÁĞ±í½øĞĞ³õÊ¼»¯
-            if(dwStatus != (DWORD)wdc_err.WD_STATUS_SUCCESS)//¼ì²é×´Ì¬
-                goto Error;//Èç¹û´íÎó½øĞĞ´íÎó´¦Àí
+            DWORD dwStatus = pciDevList.Init();           //å°†è®¾å¤‡åˆ—è¡¨è¿›è¡Œåˆå§‹åŒ–
+            if(dwStatus != (DWORD)wdc_err.WD_STATUS_SUCCESS)//æ£€æŸ¥çŠ¶æ€
+                goto Error;//å¦‚æœé”™è¯¯è¿›è¡Œé”™è¯¯å¤„ç†
             
-            foreach(PCIE_Device dev in pciDevList)//½«pciDevListÉè±¸ÁĞ±í¶ÔÏóÖĞµÄÉè±¸¼ÓÔØµ½½çÃæµÄÑ¡ÔñÁĞ±íÖĞ
+            foreach(PCIE_Device dev in pciDevList)//å°†pciDevListè®¾å¤‡åˆ—è¡¨å¯¹è±¡ä¸­çš„è®¾å¤‡åŠ è½½åˆ°ç•Œé¢çš„é€‰æ‹©åˆ—è¡¨ä¸­
                 lstBxDevices.Items.Add(dev.ToString(true));
-            lstBxDevices.SelectedIndex = 0;//ÉèÖÃÄ¬ÈÏÑ¡ÔñÏîÄ¿
+            lstBxDevices.SelectedIndex = 0;//è®¾ç½®é»˜è®¤é€‰æ‹©é¡¹ç›®
 
             return;            
 Error:
@@ -417,13 +417,13 @@ Error:
 
         private void PCIE_diag_Closing(object sender, System.EventArgs e)
         {
-            pciDevList.Dispose();            //¹Ø±ÕÁĞ±í
+            pciDevList.Dispose();            //å…³é—­åˆ—è¡¨
         }        
        /* list box lstBxDevices */
-        private void lstBxDevices_SelectedIndexChanged(object sender, //Ñ¡Ôñ¿òÊı¾İ¸üĞÂ
+        private void lstBxDevices_SelectedIndexChanged(object sender, //é€‰æ‹©æ¡†æ•°æ®æ›´æ–°
             System.EventArgs e)
         {
-            if(lstBxDevices.SelectedIndex < 0)//ÅĞ¶Ïµ±Ç°µÄÑ¡ÔñË÷Òı
+            if(lstBxDevices.SelectedIndex < 0)//åˆ¤æ–­å½“å‰çš„é€‰æ‹©ç´¢å¼•
             {
                 DisableMenu();
                 btDevice.Enabled = false;
@@ -431,8 +431,8 @@ Error:
             else
             {
                 PCIE_Device dev = 
-                    pciDevList.Get(lstBxDevices.SelectedIndex);//»ñµÃµ±Ç°Ñ¡ÔñÉè±¸
-                UpdateMenu(lstBxDevices.SelectedIndex);//¸üĞÂ²Ëµ¥À¸×´Ì¬
+                    pciDevList.Get(lstBxDevices.SelectedIndex);//è·å¾—å½“å‰é€‰æ‹©è®¾å¤‡
+                UpdateMenu(lstBxDevices.SelectedIndex);//æ›´æ–°èœå•æ çŠ¶æ€
                 btDevice.Enabled = true;
                 if(dev.Handle == IntPtr.Zero)
                     btDevice.Text = "Open Device";
@@ -446,9 +446,9 @@ Error:
         private void lstBxDevices_DoubleClicked(object sender, 
             System.EventArgs e)
         {
-            btDevice_Click(sender, e); //°´Å¥ºÍË«»÷Ğ§¹ûÏàÍ¬
+            btDevice_Click(sender, e); //æŒ‰é’®å’ŒåŒå‡»æ•ˆæœç›¸åŒ
         }
-    /* device button */   //´ò¿ªÉè±¸°´¼ü´¦Àíº¯Êı
+    /* device button */   //æ‰“å¼€è®¾å¤‡æŒ‰é”®å¤„ç†å‡½æ•°
         private void btDevice_Click(object sender, System.EventArgs e)
         {
             if(btDevice.Text == "Open Device")
@@ -456,7 +456,7 @@ Error:
                 if(DeviceOpen(lstBxDevices.SelectedIndex) == true)
                 {
                     btDevice.Text = "Close Device";
-                    EnableMenu();      //µã»÷Ö®ºóÊ¹ÄÜ²Ëµ¥          
+                    EnableMenu();      //ç‚¹å‡»ä¹‹åä½¿èƒ½èœå•          
                 }
             }
             else
@@ -482,12 +482,12 @@ Error:
         {
             ToggleMenu(true);                   
         }
-        private void DisableMenu()//¹Ø±Õ²Ëµ¥
+        private void DisableMenu()//å…³é—­èœå•
         {
             ToggleMenu(false);
         }
 
-        private void ToggleMenu(bool flag)//²Ëµ¥µÄ¾ßÌåÊ¹ÄÜ·½·¨
+        private void ToggleMenu(bool flag)//èœå•çš„å…·ä½“ä½¿èƒ½æ–¹æ³•
         {
             for(int index=0; index < mainMenu1.MenuItems.Count; ++index)
                 mainMenu1.MenuItems[index].Enabled = flag;
@@ -498,7 +498,7 @@ Error:
         private void menuAddrRW_Click(object sender, System.EventArgs e)
         {
             PCIE_Device dev =
-                pciDevList.Get(lstBxDevices.SelectedIndex);//»ñµÃµ±Ç°Ñ¡ÔñµÄÉè±¸
+                pciDevList.Get(lstBxDevices.SelectedIndex);//è·å¾—å½“å‰é€‰æ‹©çš„è®¾å¤‡
             string[] sBars = dev.AddrDescToString(false);
             AddrSpaceTransferForm addrSpcFrm = new 
                 AddrSpaceTransferForm(dev, sBars);
@@ -605,16 +605,16 @@ Error:
             txtLog.Clear();
         }                                                
 
-        public void LogFunc(string str)  //logÊı¾İ¸üĞÂÊµÏÖ·½·¨
+        public void LogFunc(string str)  //logæ•°æ®æ›´æ–°å®ç°æ–¹æ³•
         {
             if(txtLog != null)
-                txtLog.Text += str + Environment.NewLine;//ÔÚlogÀïÃæ¼ÓÊı¾İ
+                txtLog.Text += str + Environment.NewLine;//åœ¨logé‡Œé¢åŠ æ•°æ®
         }
 
-        public void TraceLog(string str)//tracelogÊµÏÖ·½·¨
+        public void TraceLog(string str)//tracelogå®ç°æ–¹æ³•
         {
             if(this.InvokeRequired)
-                Invoke(new Log.TRACE_LOG(LogFunc), new object[]{str});//Ïß³ÌÎÊÌâ Ö÷ÒªÊÇÓÃÓÚ»ØËİ»æÖÆ´°ÌåµÄÏß³Ì
+                Invoke(new Log.TRACE_LOG(LogFunc), new object[]{str});//çº¿ç¨‹é—®é¢˜ ä¸»è¦æ˜¯ç”¨äºå›æº¯ç»˜åˆ¶çª—ä½“çš„çº¿ç¨‹
             else
                 LogFunc(str);
         }
@@ -638,7 +638,7 @@ Error:
             return str;
         }
 
-        public static string DisplayHexBuffer(object[] obj, DWORD dwBuffSize, //´òÓ¡16½øÖÆµÄ»º³åÆ÷    objÊÇÒ»¸öÊı×éµÄÊı×é dwbuffsizeÊÇÒ»¸öÊı×éµÄ´óĞ¡
+        public static string DisplayHexBuffer(object[] obj, DWORD dwBuffSize, //æ‰“å°16è¿›åˆ¶çš„ç¼“å†²å™¨    objæ˜¯ä¸€ä¸ªæ•°ç»„çš„æ•°ç»„ dwbuffsizeæ˜¯ä¸€ä¸ªæ•°ç»„çš„å¤§å°
              WDC_ADDR_MODE mode)
         {
             string display = "";
@@ -647,10 +647,10 @@ Error:
             {
             case WDC_ADDR_MODE.WDC_MODE_8:
                 {
-                    BYTE[] buff = (BYTE[])obj[0];  //»ñµÃÊı×é
-                    for(uint i=0; i<dwBuffSize; ++i)//´óĞ¡±È½Ï
+                    BYTE[] buff = (BYTE[])obj[0];  //è·å¾—æ•°ç»„
+                    for(uint i=0; i<dwBuffSize; ++i)//å¤§å°æ¯”è¾ƒ
                         display = string.Concat(display, 
-                            buff[i].ToString("X2"), " ");//display×ª»»³É16½øÖÆ³¤¶ÈÁ½Î»
+                            buff[i].ToString("X2"), " ");//displayè½¬æ¢æˆ16è¿›åˆ¶é•¿åº¦ä¸¤ä½
                     break;
                 }
             case WDC_ADDR_MODE.WDC_MODE_16:
@@ -658,7 +658,7 @@ Error:
                     WORD[] buff = (WORD[])obj[0];
                     for(int i=0; i<dwBuffSize/2; ++i)
                         display = string.Concat(display, 
-                            buff[i].ToString("X4"), " ");//Á¬½ÓÈı¸ö×Ö·û´®
+                            buff[i].ToString("X4"), " ");//è¿æ¥ä¸‰ä¸ªå­—ç¬¦ä¸²
                     break;
                 }
             case WDC_ADDR_MODE.WDC_MODE_32:

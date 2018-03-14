@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using Jungo.wdapi_dotnet;
 
 using BYTE = System.Byte;
@@ -9,21 +9,21 @@ using UINT64 = System.UInt64;
 
 namespace Jungo.pcie_lib
 {
-    public class Log//logÀà
+    public class Log//logç±»
     {
         public delegate void TRACE_LOG(string str);
         public delegate void ERR_LOG(string str);
 
-        public static TRACE_LOG dTraceLog;//×·×Ù´¦Àíº¯ÊıÖ¸Õë
-        public static ERR_LOG dErrLog;//±¨´í´¦Àíº¯ÊıÖ¸Õë
+        public static TRACE_LOG dTraceLog;//è¿½è¸ªå¤„ç†å‡½æ•°æŒ‡é’ˆ
+        public static ERR_LOG dErrLog;//æŠ¥é”™å¤„ç†å‡½æ•°æŒ‡é’ˆ
 
-        public Log(TRACE_LOG funcTrace, ERR_LOG funcErr)//¹¹Ôìº¯Êı ´«ÈëµÄÊÇº¯ÊıÖ¸Õë
+        public Log(TRACE_LOG funcTrace, ERR_LOG funcErr)//æ„é€ å‡½æ•° ä¼ å…¥çš„æ˜¯å‡½æ•°æŒ‡é’ˆ
         {
-            dTraceLog = funcTrace;//¸³Öµ
+            dTraceLog = funcTrace;//èµ‹å€¼
             dErrLog = funcErr;
         }
 
-        public static void TraceLog(string str)  //µ÷ÓÃ×·×ÙÊä³ölog
+        public static void TraceLog(string str)  //è°ƒç”¨è¿½è¸ªè¾“å‡ºlog
         {
             if(dTraceLog == null)
                 return;
@@ -31,7 +31,7 @@ namespace Jungo.pcie_lib
             dTraceLog(str);
         }
 
-        public static void ErrLog(string str)//µ÷ÓÃ´íÎóÊä³ölog
+        public static void ErrLog(string str)//è°ƒç”¨é”™è¯¯è¾“å‡ºlog
         {
             if(dErrLog == null)
                 return;

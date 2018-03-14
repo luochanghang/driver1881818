@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Collections;
@@ -19,10 +19,10 @@ namespace Jungo.pcie_diag
 {
     public class AddrSpaceTransferForm : System.Windows.Forms.Form
     {
-        private Exception m_excp;  //Òì³£´¦Àí
+        private Exception m_excp;  //å¼‚å¸¸å¤„ç†
         private PCIE_Device m_device;
         private object[] m_obj;
-        private RW m_direction; //¶ÁĞ´ÀàĞÍ¶¨Òå
+        private RW m_direction; //è¯»å†™ç±»å‹å®šä¹‰
         private DWORD m_dwBar;
         private WDC_ADDR_MODE m_mode;
         private DWORD m_dwBytes;
@@ -59,7 +59,7 @@ namespace Jungo.pcie_diag
 
         private System.ComponentModel.Container components = null;
 
-        public AddrSpaceTransferForm(PCIE_Device dev, string[] sBars)//¹¹Ôìº¯Êı
+        public AddrSpaceTransferForm(PCIE_Device dev, string[] sBars)//æ„é€ å‡½æ•°
         {
             InitializeComponent();
 
@@ -67,14 +67,14 @@ namespace Jungo.pcie_diag
 
             for(int i=0; i<sBars.Length; ++i)
             {
-                cmboBar.Items.Add(sBars[i]);  //¿Õ¼äÊäÈë
+                cmboBar.Items.Add(sBars[i]);  //ç©ºé—´è¾“å…¥
             }
 
             this.Text = "Read/Write Address Space Form";
 
             cmboMode.Items.AddRange(new object[]{"8 bits", "16 bits", "32 bits", "64 bits"});
             cmboTransType.Items.AddRange(new object[]{"block", "non-block"});
-            chkBoxInc.Enabled = false;//´ò¹³Ñ¡Ïî
+            chkBoxInc.Enabled = false;//æ‰“é’©é€‰é¡¹
             txtNumBytes.Enabled = false;
         }
 
@@ -89,7 +89,7 @@ namespace Jungo.pcie_diag
             }
             base.Dispose( disposing );
         }
-        //´°¿ÚÉú³É³õÊ¼»¯´úÂë
+        //çª—å£ç”Ÿæˆåˆå§‹åŒ–ä»£ç 
         #region Windows Form Designer generated code
         private void InitializeComponent()
         {
@@ -384,18 +384,18 @@ namespace Jungo.pcie_diag
 
             DialogResult result = DialogResult.Retry;
 
-            while((result = ShowDialog()) == DialogResult.Retry);//²»¶ÏÏÔÊ¾´°¿Ú
+            while((result = ShowDialog()) == DialogResult.Retry);//ä¸æ–­æ˜¾ç¤ºçª—å£
 
             return true;
         }
 
-        private void btRead_Click(object sender, System.EventArgs e) //readÊÂ¼ş´¦Àí
+        private void btRead_Click(object sender, System.EventArgs e) //readäº‹ä»¶å¤„ç†
         {
             m_direction = RW.READ;
             btClick();            
         }
 
-        private void btWrite_Click(object sender, System.EventArgs e)//Ğ´ÊÂ¼ş
+        private void btWrite_Click(object sender, System.EventArgs e)//å†™äº‹ä»¶
         {
             m_direction = RW.WRITE;
             btClick();                
@@ -412,7 +412,7 @@ namespace Jungo.pcie_diag
             {
                 MessageBox.Show(m_excp.Message, "Input Entry Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                DialogResult = DialogResult.Retry;//ÖØĞÂÏÔÊ¾
+                DialogResult = DialogResult.Retry;//é‡æ–°æ˜¾ç¤º
                 return;
             }
  
@@ -422,11 +422,11 @@ namespace Jungo.pcie_diag
         private void ReadWriteAddrSpace()
         {
             DWORD dwStatus = 0;
-            BOOL bIsBlock = (m_type == TRANSFER_TYPE.BLOCK);//ÅĞ¶ÏÊÇ·ñÊÇËø¶¨Ä£Ê½
-            BOOL bIsRead = (m_direction == RW.READ);//ÅĞ¶ÏÊÇ¶Á»¹ÊÇĞ´
+            BOOL bIsBlock = (m_type == TRANSFER_TYPE.BLOCK);//åˆ¤æ–­æ˜¯å¦æ˜¯é”å®šæ¨¡å¼
+            BOOL bIsRead = (m_direction == RW.READ);//åˆ¤æ–­æ˜¯è¯»è¿˜æ˜¯å†™
             WDC_ADDR_RW_OPTIONS dwOptions = (m_bAutoInc ?
-              //¶ÁĞ´Ä£Ê½ ×Ô¶¯Ôö³¤ Èç¹ûÎªÄ¬ÈÏÄ£Ê½ ÄÇÃ´»á×Ô¶¯°´ÕÕÕâ¸öµØÖ·Öğ½¥Ôö³¤ Èç¹ûÊÇno_autoincÄ£Ê½ÄÇÃ´²»ÒªÔÚ¿é´«ÊäÖĞ×Ô¶¯Ôö¼Ó¶Á/Ğ´µØÖ·£¬
-              //¼´ÔÚ¶Á/Ğ´Ò»¿é´æ´¢Æ÷»òI / OµØÖ·£¨½öÓë¿é£¨´®£©´«ÊäÏà¹Ø£©Ê±±£³ÖÉè±¸µØÖ·²»±ä¡£             
+              //è¯»å†™æ¨¡å¼ è‡ªåŠ¨å¢é•¿ å¦‚æœä¸ºé»˜è®¤æ¨¡å¼ é‚£ä¹ˆä¼šè‡ªåŠ¨æŒ‰ç…§è¿™ä¸ªåœ°å€é€æ¸å¢é•¿ å¦‚æœæ˜¯no_autoincæ¨¡å¼é‚£ä¹ˆä¸è¦åœ¨å—ä¼ è¾“ä¸­è‡ªåŠ¨å¢åŠ è¯»/å†™åœ°å€ï¼Œ
+              //å³åœ¨è¯»/å†™ä¸€å—å­˜å‚¨å™¨æˆ–I / Oåœ°å€ï¼ˆä»…ä¸å—ï¼ˆä¸²ï¼‰ä¼ è¾“ç›¸å…³ï¼‰æ—¶ä¿æŒè®¾å¤‡åœ°å€ä¸å˜ã€‚             
               WDC_ADDR_RW_OPTIONS.WDC_ADDR_RW_DEFAULT : 
                 WDC_ADDR_RW_OPTIONS.WDC_ADDR_RW_NO_AUTOINC);
             /*WDC_ADDR_RW_NO_AUTOINC Do no automatically increment the read/write address 
@@ -444,7 +444,7 @@ namespace Jungo.pcie_diag
                         dwStatus = bIsBlock ? 
                             wdc_lib_decl.WDC_ReadAddrBlock(m_device.Handle,    //B.3.24. WDC_ReadAddrBlock()  Reads a block of data from the device.
                                 m_dwBar, m_dwOffset, dwFloorBytes, m_bData,  //m_dwOffset  The offset from the beginning of the specified address space(dwAddrSpace) to read from
-                                m_mode, dwOptions) :                                           //´ÓÖ¸¶¨µØÖ·¿Õ¼ä£¨dwAddrSpace£©¿ªÊ¼µÄÆ«ÒÆÁ¿´ÓÖĞ¶ÁÈ¡
+                                m_mode, dwOptions) :                                           //ä»æŒ‡å®šåœ°å€ç©ºé—´ï¼ˆdwAddrSpaceï¼‰å¼€å§‹çš„åç§»é‡ä»ä¸­è¯»å–
                             wdc_lib_decl.WDC_ReadAddr8(m_device.Handle, 
                                 m_dwBar, m_dwOffset, ref m_bData[0]);
                     else
@@ -453,7 +453,7 @@ namespace Jungo.pcie_diag
                                 m_dwBar, m_dwOffset, dwFloorBytes, m_bData, 
                                 m_mode, dwOptions) :
                             wdc_lib_decl.WDC_WriteAddr8(m_device.Handle,
-                                m_dwBar, m_dwOffset, m_bData[0]);//¶ÔÓÚnonblock¶øÑÔ Ö»ÓĞÒ»¸öÎªËµÒÔÒª¼Ó[0]
+                                m_dwBar, m_dwOffset, m_bData[0]);//å¯¹äºnonblockè€Œè¨€ åªæœ‰ä¸€ä¸ªä¸ºè¯´ä»¥è¦åŠ [0]
 
                     m_obj[0] = m_bData; 
                     break;
@@ -475,7 +475,7 @@ namespace Jungo.pcie_diag
                             wdc_lib_decl.WDC_WriteAddr16(m_device.Handle, 
                                 m_dwBar, m_dwOffset, m_wData[0]);
 
-                    m_obj[0] = m_wData; //½«ÊäÈëÊı×éÊäÈë  objectÀà
+                    m_obj[0] = m_wData; //å°†è¾“å…¥æ•°ç»„è¾“å…¥  objectç±»
                     break;
                 }
             case WDC_ADDR_MODE.WDC_MODE_32:
@@ -527,37 +527,37 @@ namespace Jungo.pcie_diag
         {
             string str = "";
 
-            m_excp = new Exception("ÇëÑ¡ÔñÒ»¸öBAR¿Õ¼ä");//Òì³£ÏÔÊ¾ Ã»ÓĞÑ¡Ôñ  µ±Ã»ÓĞÑ¡ÔñµÄÊ±ºòÊÇ
-            if((uint)cmboBar.SelectedIndex == 0xffffffff)//Èç¹ûÃ»ÓĞÑ¡ÔñÒ»¸öbar ¾ÍÅ×³öÒ»¸ö´íÎó Í¨¹ıÅĞ¶ÏÊÇ²»ÊÇ-1À´ÅĞ¶Ï
-                throw m_excp;//Å×³öÒì³£
-            m_dwBar = (DWORD)cmboBar.SelectedIndex;//¶Á³öÑ¡ÔñµÄÏîÄ¿
+            m_excp = new Exception("è¯·é€‰æ‹©ä¸€ä¸ªBARç©ºé—´");//å¼‚å¸¸æ˜¾ç¤º æ²¡æœ‰é€‰æ‹©  å½“æ²¡æœ‰é€‰æ‹©çš„æ—¶å€™æ˜¯
+            if((uint)cmboBar.SelectedIndex == 0xffffffff)//å¦‚æœæ²¡æœ‰é€‰æ‹©ä¸€ä¸ªbar å°±æŠ›å‡ºä¸€ä¸ªé”™è¯¯ é€šè¿‡åˆ¤æ–­æ˜¯ä¸æ˜¯-1æ¥åˆ¤æ–­
+                throw m_excp;//æŠ›å‡ºå¼‚å¸¸
+            m_dwBar = (DWORD)cmboBar.SelectedIndex;//è¯»å‡ºé€‰æ‹©çš„é¡¹ç›®
 
-            m_excp = new Exception("ÇëÑ¡Ôñ´«ÊäÎ»¿í");
+            m_excp = new Exception("è¯·é€‰æ‹©ä¼ è¾“ä½å®½");
             uint uiModeIndex = (uint)cmboMode.SelectedIndex;
             if(uiModeIndex == 0xffffffff)
-                throw m_excp;//Å×³öÒì³£
+                throw m_excp;//æŠ›å‡ºå¼‚å¸¸
             m_mode = (uiModeIndex == 0)? WDC_ADDR_MODE.WDC_MODE_8: 
                 (uiModeIndex == 1)? WDC_ADDR_MODE.WDC_MODE_16:
                 (uiModeIndex == 2)? WDC_ADDR_MODE.WDC_MODE_32:
-                WDC_ADDR_MODE.WDC_MODE_64;//Ä£Ê½Ñ¡Ôñ ½øĞĞÅĞ¶Ï
+                WDC_ADDR_MODE.WDC_MODE_64;//æ¨¡å¼é€‰æ‹© è¿›è¡Œåˆ¤æ–­
 
-            m_excp = new Exception("Choose the Transfer Type");//´«ÊäÀàĞÍ block nonblockÁ½ÖÖ
+            m_excp = new Exception("Choose the Transfer Type");//ä¼ è¾“ç±»å‹ block nonblockä¸¤ç§
             if((uint)cmboTransType.SelectedIndex == 0xffffffff)
                 throw m_excp;
             m_type = (cmboTransType.SelectedIndex == 0)?
-            TRANSFER_TYPE.BLOCK : TRANSFER_TYPE.NONBLOCK;//ÅĞ¶ÏÊÇblock »¹ÊÇnonblockÀàĞÍµÄ 
-            /*m_dwBytesÓÃÀ´±íÃ÷Êı¾İµÄ¸öÊı ²»¹ÜÊı¾İÊÇ8bit »òÕßÊÇ16»¹ÊÇ32 64bit ¶ÔÓÚnonblockÀàĞÍ ÊÊÖĞÎªÒ»Î» ¶ÔÓÚblockÀàĞÍ¿ÉÒÔÊÇ´óÓÚÒ»µÄ¸öÊı µ«ÊÇm_dwBytesÊÇÒÔ
-             * byte¼ÆÊıµÄ ²»Í¬µÄÄ£Ê½»á½øĞĞÒ»¶¨×ª»»   ²Â²â ¿ÉÄÜblock¿ÉÒÔÁ¬ĞøµÄĞ´Êı¾İ ²»ÊÇÒ»¸öÒ»¸öµÄĞ´ 
+            TRANSFER_TYPE.BLOCK : TRANSFER_TYPE.NONBLOCK;//åˆ¤æ–­æ˜¯block è¿˜æ˜¯nonblockç±»å‹çš„ 
+            /*m_dwBytesç”¨æ¥è¡¨æ˜æ•°æ®çš„ä¸ªæ•° ä¸ç®¡æ•°æ®æ˜¯8bit æˆ–è€…æ˜¯16è¿˜æ˜¯32 64bit å¯¹äºnonblockç±»å‹ é€‚ä¸­ä¸ºä¸€ä½ å¯¹äºblockç±»å‹å¯ä»¥æ˜¯å¤§äºä¸€çš„ä¸ªæ•° ä½†æ˜¯m_dwBytesæ˜¯ä»¥
+             * byteè®¡æ•°çš„ ä¸åŒçš„æ¨¡å¼ä¼šè¿›è¡Œä¸€å®šè½¬æ¢   çŒœæµ‹ å¯èƒ½blockå¯ä»¥è¿ç»­çš„å†™æ•°æ® ä¸æ˜¯ä¸€ä¸ªä¸€ä¸ªçš„å†™ 
              */
 
-            if(txtNumBytes.Enabled == true)//µ±enabledÖ®ºó Èç¹ûÎªture Ôò¿ÉÒÔÊäÈëÊı¾İ false²»ÄÜÊäÈëÊı¾İ
+            if(txtNumBytes.Enabled == true)//å½“enabledä¹‹å å¦‚æœä¸ºture åˆ™å¯ä»¥è¾“å…¥æ•°æ® falseä¸èƒ½è¾“å…¥æ•°æ®
             {
                 m_excp = new Exception("Please enter the number of bytes. " +
                     "Entered value should be a hex number." + 
                     Environment.NewLine + " (Maximum value: 0x" +
-                    m_device.AddrDesc[m_dwBar].dwBytes.ToString("X") + ")");//×î´óµÄ¿Õ¼ä
-                m_dwBytes = Convert.ToUInt32(txtNumBytes.Text,16);//½«16½øÖÆ×ª»»Îª32Î»ÎŞ·ûºÅÕûÊı
-                if(m_dwBytes > m_device.AddrDesc[m_dwBar].dwBytes)//ÅĞ¶ÏÊÇ·ñ³¬³ö·¶Î§    dwBytes£ºThe address space's size (in bytes)
+                    m_device.AddrDesc[m_dwBar].dwBytes.ToString("X") + ")");//æœ€å¤§çš„ç©ºé—´
+                m_dwBytes = Convert.ToUInt32(txtNumBytes.Text,16);//å°†16è¿›åˆ¶è½¬æ¢ä¸º32ä½æ— ç¬¦å·æ•´æ•°
+                if(m_dwBytes > m_device.AddrDesc[m_dwBar].dwBytes)//åˆ¤æ–­æ˜¯å¦è¶…å‡ºèŒƒå›´    dwBytesï¼šThe address space's size (in bytes)
                     throw m_excp;
             }
             else 
@@ -565,15 +565,15 @@ namespace Jungo.pcie_diag
                     ((m_mode == WDC_ADDR_MODE.WDC_MODE_16) ? 2 :
                     ((m_mode == WDC_ADDR_MODE.WDC_MODE_32) ? 4 : 8)));
 
-            if(chkBoxInc.Enabled == true)//¹³ºÅ¿ò  ¼ì²éÅĞ¶Ï¿òÊÇ·ñÑ¡ÖĞ
-                m_bAutoInc = chkBoxInc.Checked;//×Ô¶¯Ôö³¤ 
+            if(chkBoxInc.Enabled == true)//é’©å·æ¡†  æ£€æŸ¥åˆ¤æ–­æ¡†æ˜¯å¦é€‰ä¸­
+                m_bAutoInc = chkBoxInc.Checked;//è‡ªåŠ¨å¢é•¿ 
 
             m_excp = new Exception("Please enter the offset. " +
                 "Entered value should be a hex number");
-            m_dwOffset = (DWORD)Convert.ToInt32(txtOffset.Text,16);//offset ¿òÊı¾İ  Èç¹ûÃ»ÓĞÊäÈëÊı¾İ ¾Í»á´¥·¢Òì³£
-            //m_directionÓÃÀ´±íÊ¾ÊÇĞ´ÊÂ¼ş»¹ÊÇ¶ÁÊÂ¼ş
+            m_dwOffset = (DWORD)Convert.ToInt32(txtOffset.Text,16);//offset æ¡†æ•°æ®  å¦‚æœæ²¡æœ‰è¾“å…¥æ•°æ® å°±ä¼šè§¦å‘å¼‚å¸¸
+            //m_directionç”¨æ¥è¡¨ç¤ºæ˜¯å†™äº‹ä»¶è¿˜æ˜¯è¯»äº‹ä»¶
             if(m_direction == RW.WRITE && txtInput.Text == "")
-            {//Èç¹ûÊÇĞ´ÊÂ¼şµ«ÊÇÃ»ÓĞÊäÈëÊı¾İ Å×³öÒì³£
+            {//å¦‚æœæ˜¯å†™äº‹ä»¶ä½†æ˜¯æ²¡æœ‰è¾“å…¥æ•°æ® æŠ›å‡ºå¼‚å¸¸
                 m_excp = new Exception("You must enter the data to write. " +
                     "data should be hex");
                 throw m_excp;
@@ -582,7 +582,7 @@ namespace Jungo.pcie_diag
             m_excp = new Exception("The data you've entered is invalid. please "
                 + "try again (hex)");
             
-            switch(m_mode)//m_bData  m_wData  m_u32Data ÀàĞÍ²»Ò»Ñù
+            switch(m_mode)//m_bData  m_wData  m_u32Data ç±»å‹ä¸ä¸€æ ·
             {
             case WDC_ADDR_MODE.WDC_MODE_8:
                 {    
@@ -590,11 +590,11 @@ namespace Jungo.pcie_diag
 
                     if(m_direction == RW.WRITE)
                     {
-                        str = txtInput.Text;//¶ÁÈëÊı¾İ??
+                        str = txtInput.Text;//è¯»å…¥æ•°æ®??
                         for(int i=0, j=0; i<str.Length && j<m_dwBytes; j++)
                         {
-                            while (str[i] == ' ') ++i;//ÓÃÀ´Ìø¹ı¿Õ¸ñ
-                            m_bData[j] = Convert.ToByte(str.Substring(i,2),16);//Êı¾İ³¤¶ÈÓÉmode¾ö¶¨  8bitÔòÊı×é³¤¶ÈÎª1 ÔªÎªbyte 16bitÔòÊı×é³¤¶ÈÎª1 ÔªÎª32Î»
+                            while (str[i] == ' ') ++i;//ç”¨æ¥è·³è¿‡ç©ºæ ¼
+                            m_bData[j] = Convert.ToByte(str.Substring(i,2),16);//æ•°æ®é•¿åº¦ç”±modeå†³å®š  8bitåˆ™æ•°ç»„é•¿åº¦ä¸º1 å…ƒä¸ºbyte 16bitåˆ™æ•°ç»„é•¿åº¦ä¸º1 å…ƒä¸º32ä½
                             i+=2;    
                         }
                     }                        
@@ -610,13 +610,13 @@ namespace Jungo.pcie_diag
                         for(int i=0, j=0; i<str.Length && j<m_dwBytes/2; j++)
                         {
                             while (str[i] == ' ') ++i;
-                            m_wData[j] = Convert.ToUInt16(str.Substring(i,4),16);//substring·µ»ØÒ»¸ö´ÓstartIndex¿ªÊ¼£¬³¤¶ÈÎªlengthµÄ×Ó×Ö·û´®¡£
+                            m_wData[j] = Convert.ToUInt16(str.Substring(i,4),16);//substringè¿”å›ä¸€ä¸ªä»startIndexå¼€å§‹ï¼Œé•¿åº¦ä¸ºlengthçš„å­å­—ç¬¦ä¸²ã€‚
                                 i +=4;
                         }        
                     }
                     break;
                 }
-            case WDC_ADDR_MODE.WDC_MODE_32://ËùÓĞ·ÖÖ§Ñ­»·Ò»´Î ×é×°³É²»Í¬Î»ÊıµÄÖµ
+            case WDC_ADDR_MODE.WDC_MODE_32://æ‰€æœ‰åˆ†æ”¯å¾ªç¯ä¸€æ¬¡ ç»„è£…æˆä¸åŒä½æ•°çš„å€¼
                 {
                     m_u32Data = new UINT32[m_dwBytes/4];
 
@@ -653,7 +653,7 @@ namespace Jungo.pcie_diag
             }                    
         }
 
-        private void cmboTransType_SelectedIndexChanged(object sender, //ÀàĞÍÑ¡Ôñ
+        private void cmboTransType_SelectedIndexChanged(object sender, //ç±»å‹é€‰æ‹©
             System.EventArgs e)
         {
             if((string)cmboTransType.SelectedItem == "non-block")
@@ -677,15 +677,15 @@ namespace Jungo.pcie_diag
         {
             string sData = "";
             string sInfo = "";
-            if (status == wdc_err.WD_STATUS_SUCCESS)//Èç¹û³É¹¦µÄ»° 
+            if (status == wdc_err.WD_STATUS_SUCCESS)//å¦‚æœæˆåŠŸçš„è¯ 
             {
                 sData = (bIsRead? "R: " : "W: ") + 
-                    diag_lib.DisplayHexBuffer(m_obj, m_dwBytes, m_mode);//Ğ´ÈëÊı¾İ×°»»³É×Ö·û´®
+                    diag_lib.DisplayHexBuffer(m_obj, m_dwBytes, m_mode);//å†™å…¥æ•°æ®è£…æ¢æˆå­—ç¬¦ä¸²
                 sInfo = (bIsRead ? " from " : " to ") +    "offset " + 
-                    m_dwOffset.ToString("X") + " on BAR " + m_dwBar.ToString() //Ğ´³öÊÇ¶Á»¹ÊÇĞ´ ÔÚÊ²Ã´Î»ÖÃ ÄÇ¸öÉè±¸
+                    m_dwOffset.ToString("X") + " on BAR " + m_dwBar.ToString() //å†™å‡ºæ˜¯è¯»è¿˜æ˜¯å†™ åœ¨ä»€ä¹ˆä½ç½® é‚£ä¸ªè®¾å¤‡
                     + "(" + m_device.ToString(false) + ")";
 
-                Log.TraceLog("AddrSpaceTransferForm: " + sData + sInfo);//ÔÚÉÏÒ»¼¶´òÓ¡
+                Log.TraceLog("AddrSpaceTransferForm: " + sData + sInfo);//åœ¨ä¸Šä¸€çº§æ‰“å°
             }
             else 
             {
@@ -698,7 +698,7 @@ namespace Jungo.pcie_diag
                 Log.ErrLog("AddrSpaceTransferForm: " + sData + sInfo);
             }
 
-            txtData.Text += sData + Environment.NewLine;            //ÔÚÕâÒ»¼¶´òÓ¡ÎÄ±¾ Êı¾İĞ´Èë
+            txtData.Text += sData + Environment.NewLine;            //åœ¨è¿™ä¸€çº§æ‰“å°æ–‡æœ¬ æ•°æ®å†™å…¥
         }
 
         private void lblOffset_Click(object sender, EventArgs e)
