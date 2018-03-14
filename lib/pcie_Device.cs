@@ -378,9 +378,9 @@ Error:
         public DWORD EnableInterrupts(USER_INTERRUPT_CALLBACK userIntCb, IntPtr pData)//中断使能程序 
         {
             DWORD dwStatus;
-            WD_TRANSFER[] pIntTransCmds = null;
+            WD_TRANSFER[] pIntTransCmds = null;//Memory/IO read/write transfer command information structure
             DWORD dwNumCmds;
-            if(userIntCb == null)
+            if(userIntCb == null)//无法初始化
             {
                 Log.TraceLog("PCIE_Device.EnableInterrupts: "
                     + "user callback is invalid");//无效的
