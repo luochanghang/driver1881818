@@ -1,4 +1,4 @@
-
+ï»¿
 using System;
 using System.Collections;
 
@@ -8,9 +8,9 @@ using DWORD = System.UInt32;
 using BOOL = System.Boolean;
 using WDC_DRV_OPEN_OPTIONS = System.UInt32; 
 
-namespace Jungo.pcie_lib//¶¨ÒåÉè±¸¿â
+namespace Jungo.pcie_lib//å®šä¹‰è®¾å¤‡åº“
 {
-    public class PCIE_DeviceList: ArrayList//C#µÄ¼Ì³Ð
+    public class PCIE_DeviceList: ArrayList//C#çš„ç»§æ‰¿
     {
         private string PCIE_DEFAULT_LICENSE_STRING  = "6C3CC2CFE89E7AD0424A070D434A6F6DC4950904.jingzilong";
         // TODO: If you have renamed the WinDriver kernel module (windrvr6.sys),
@@ -21,7 +21,7 @@ namespace Jungo.pcie_lib//¶¨ÒåÉè±¸¿â
 
         private static PCIE_DeviceList instance;
 
-        public static PCIE_DeviceList TheDeviceList()  //¾²Ì¬º¯Êý   ·µ»ØÒ»¸öPCIE_DeviceList¶ÔÏó
+        public static PCIE_DeviceList TheDeviceList()  //é™æ€å‡½æ•°   è¿”å›žä¸€ä¸ªPCIE_DeviceListå¯¹è±¡
         {
             if (instance == null)
             {
@@ -30,15 +30,15 @@ namespace Jungo.pcie_lib//¶¨ÒåÉè±¸¿â
             return instance;
         }
 
-        private PCIE_DeviceList(){}//¹¹Ôìº¯Êý
+        private PCIE_DeviceList(){}//æž„é€ å‡½æ•°
 
         public DWORD Init()
         {
-            if (windrvr_decl.WD_DriverName(PCIE_DEFAULT_DRIVER_NAME) == null)//¸Ãº¯Êý±ØÐëµÚÒ»¸ö¼ÓÔØ
+            if (windrvr_decl.WD_DriverName(PCIE_DEFAULT_DRIVER_NAME) == null)//è¯¥å‡½æ•°å¿…é¡»ç¬¬ä¸€ä¸ªåŠ è½½
             {
                 Log.ErrLog("PCIE_DeviceList.Init: Failed to set driver name for the " +
                     "WDC library.");
-                return (DWORD)wdc_err.WD_SYSTEM_INTERNAL_ERROR;//·µ»Ø´íÎó
+                return (DWORD)wdc_err.WD_SYSTEM_INTERNAL_ERROR;//è¿”å›žé”™è¯¯
             }  
             
             DWORD dwStatus = wdc_lib_decl.WDC_SetDebugOptions(wdc_lib_consts.WDC_DBG_DEFAULT,
@@ -51,23 +51,23 @@ namespace Jungo.pcie_lib//¶¨ÒåÉè±¸¿â
                 return dwStatus;
             }  
             
-            dwStatus = wdc_lib_decl.WDC_DriverOpen(//´ò¿ªÄÚºËº¯Êý ²¢½øÐÐ³õÊ¼»¯
+            dwStatus = wdc_lib_decl.WDC_DriverOpen(//æ‰“å¼€å†…æ ¸å‡½æ•° å¹¶è¿›è¡Œåˆå§‹åŒ–
                 (WDC_DRV_OPEN_OPTIONS)wdc_lib_consts.WDC_DRV_OPEN_DEFAULT,
                 PCIE_DEFAULT_LICENSE_STRING);
             if (dwStatus != (DWORD)wdc_err.WD_STATUS_SUCCESS)
             {
                 Log.ErrLog("PCIE_DeviceList.Init: Failed to initialize the WDC library. "
-                    + "Error 0x" + dwStatus.ToString("X") + utils.Stat2Str(dwStatus));//´íÎó´¦Àí
+                    + "Error 0x" + dwStatus.ToString("X") + utils.Stat2Str(dwStatus));//é”™è¯¯å¤„ç†
                 return dwStatus;
             }            
             return Populate();
         }
 
-        public PCIE_Device Get(int index)//»ñÈ¡Éè±¸
+        public PCIE_Device Get(int index)//èŽ·å–è®¾å¤‡ 1
         {
             if(index >= this.Count || index < 0)
                 return null;
-            return (PCIE_Device)this[index];    //·µ»ØÉè±¸Á´±íÊý×éÖÐµÄÄ³Ò»Ïî ²¢½øÐÐÇ¿ÖÆÀàÐÍ×ª»»
+            return (PCIE_Device)this[index];    //è¿”å›žè®¾å¤‡é“¾è¡¨æ•°ç»„ä¸­çš„æŸä¸€é¡¹ å¹¶è¿›è¡Œå¼ºåˆ¶ç±»åž‹è½¬æ¢
         }
 
         public PCIE_Device Get(WD_PCI_SLOT slot)
@@ -83,7 +83,7 @@ namespace Jungo.pcie_lib//¶¨ÒåÉè±¸¿â
         private DWORD Populate()
         {
             DWORD dwStatus;
-            WDC_PCI_SCAN_RESULT scanResult = new WDC_PCI_SCAN_RESULT();//ÐÂ½¨É¨Ãè½á¹ûÀà
+            WDC_PCI_SCAN_RESULT scanResult = new WDC_PCI_SCAN_RESULT();//æ–°å»ºæ‰«æç»“æžœç±»
 
             dwStatus = wdc_lib_decl.WDC_PciScanDevices(PCIE_DEFAULT_VENDOR_ID, 
                 PCIE_DEFAULT_DEVICE_ID, scanResult);
